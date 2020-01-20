@@ -1,0 +1,37 @@
+<div class="modal fade common-modal" id="loginModal">
+ <div class="modal-dialog max-WT-500">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       <div class="modal-body">
+          <%= form_with scope: :user,url: user_session_path,:html => { class: "main-form p-0",id: "login_page"},local: true  do |f| %>
+          <div class="form-group">
+             <%= f.email_field :email,class: "form-control",placeholder: "Email ID"%>
+          </div>
+          <div class="form-group password-field">
+            <%= f.password_field :password,class: "form-control",placeholder: "Password"%>
+          </div>
+          <div class="form-group clearfix mt25">
+             <a href="javascript:;" data-target="#forgotModal" class="forget-text f-right" data-toggle="modal" data-dismiss="modal">Forget-Password ?</a>
+             <div class="checkbox-design-block">
+                <label class="checkbox-design">
+                <input type="checkbox" name="remember_me">
+                <span></span>Remember me
+                </label>
+             </div>
+          </div>
+          <div class="button-block mb20">
+             <button type="submit" class="btn btn-success w-100">LOGIN</button>
+          </div>
+          <div class="reg-text text-center">
+             <p>DON’T HAVE AN ACCOUNT? <a href="javascript:;" data-target="#registerModal" data-toggle="modal" data-dismiss="modal">SIGN UP</a></p>
+          </div>
+          <% end %>
+       </div>
+    </div>
+ </div>
+</div>

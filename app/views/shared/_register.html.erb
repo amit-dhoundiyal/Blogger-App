@@ -1,0 +1,31 @@
+<div class="modal fade common-modal" id="registerModal">
+   <div class="modal-dialog max-WT-500">
+      <div class="modal-content py-0">
+      	<div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+         <div class="modal-body">
+            <%= form_with scope: :user,url: user_registration_path,:html => { class: "main-form p-0",id: "register_page"},local: true  do  |f| %>
+            <div class="form-group">
+            	<%= f.email_field :email, class: 'form-control',placeholder: "Email ID*",autocomplete: false  %>
+            </div>
+            <div class="form-group">
+            	<%= f.password_field :password, class: 'form-control',placeholder: "Password *",autocomplete: false%>
+            </div>
+            <div class="form-group">
+            	<%= f.password_field :password_confirmation, class: 'form-control',placeholder: "Confirm Password *",autocomplete: false%>
+            </div>
+            <div class="button-block my-3">
+               <button type= "submit" class="btn btn-success w-100">REGISTER</button>
+            </div>
+            <div class="reg-text text-center">
+               <p>Already have an account? <a href="javascript:;" data-target="#loginModal" data-toggle="modal" data-dismiss="modal">LOGIN</a></p>
+            </div>
+            <% end %>
+         </div>
+      </div>
+   </div>
+</div>

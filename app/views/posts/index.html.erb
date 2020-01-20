@@ -1,0 +1,113 @@
+<div class="header">
+	<div class="row">
+		<div class="col-md-6">
+  		<h2 class="float-left">Posts</h2>
+  	</div>
+	  <div class="col-md-6">
+	  	 <%= link_to "Add Blog", new_post_path,class: 'btn btn-success' %>
+	  </div>
+  </div>
+</div>
+
+<% if @posts.any? %>
+<% @posts.each_with_index do |post,index|%>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <h2><%= post.title %></h2>
+      <h5><%= raw post.description %></h5>
+     	<div class="fakeimg thumbnail">
+      	<% if post.image.attached? %>
+          <%= image_tag main_app.url_for(post.image) ,class: "w-100"%>
+      	<% end %>
+    	</div>
+    	<div class="row mt-3">
+         <div class="col-md-12 d-flex m-auto">
+           <h5><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></h5>
+          <% already_like_post = post.likes.find { |like| like.user_id == current_user.id} %>
+          <% if already_like_post %>
+            <%= button_to post_like_path(post,already_like_post), method: :delete,class: "btn btn-info ml-3" do %>
+              <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
+            <% end %>
+          <% else %>
+            <%= button_to post_likes_path(post), method: :post,class: "btn btn-info ml-3" do %>
+              <span class="glyphicon glyphicon-thumbs-up"></span> Like
+            <% end %>
+          <% end %>
+          <%= link_to new_post_comment_path(post),class: "btn btn-success ml-3" do %> 
+            <span class="glyphicon glyphicon-comment"></span> Comment
+          <% end %>
+    	   </div>
+      </div>
+      <% if post.comments.any? %>
+        <div class="row mt-2">
+          <div class="col-md-12">
+            <% post.comments.each do |comment|%>
+              <h3 class="text-dark"><%= comment.user.email%></h3>
+              <h4 class="text-danger"><%= comment.body %></h4>
+            <% end%>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
+<% else %>
+  <div class="alert alert-info no-objects-found">
+    <%= "No Blog is found." %>,
+    <%= link_to "Add Blog", new_post_path %>!
+  </div>
+<% end %>
+
+<style type="text/css">
+	body {
+  font-family: Arial;
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+/* Header/Blog Title */
+.header {
+  padding: 30px;
+  font-size: 40px;
+  text-align: center;
+  background: white;
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 75%;
+}
+
+
+/* Fake image */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Add a card effect for articles */
+.card {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {
+    width: 100%;
+    padding: 0;
+  }
+}
+</style>

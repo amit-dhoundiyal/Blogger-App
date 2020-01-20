@@ -1,0 +1,49 @@
+<div class="header">
+	<div class="row">
+		<div class="col-md-6">
+  		<h2 class="float-left">Post</h2>
+  	</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <h2><%= @post.title %></h2>
+      <h5><%= raw @post.description %></h5>
+     	<div class="fakeimg thumbnail">
+      	<% if @post.image.attached? %>
+          <%= image_tag main_app.url_for(@post.image) ,class: "w-100"%>
+      	<% end %>
+    	</div>
+    	<div class="row mt-3">
+         <div class="col-md-12 d-flex m-auto">
+          <h5 class="text-dark"><%= @post.likes.count %> <%= (@post.likes.count) == 1 ? 'Like' : 'Likes'%></h5>
+          <% already_like_post = @post.likes.find { |like| like.user_id == current_user.id} %>
+          <% if already_like_post %>
+            <%= button_to post_like_path(@post,already_like_post), method: :delete,class: "btn btn-info ml-3" do %>
+              <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
+            <% end %>
+          <% else %>
+            <%= button_to post_likes_path(@post), method: :post,class: "btn btn-info ml-3" do %>
+              <span class="glyphicon glyphicon-thumbs-up"></span> Like
+            <% end %>
+          <% end %>
+          <h5 class="text-dark ml-3"><%= @post_comments.count %>  <%= (@post_comments.count) == 1 ? 'Comment' : 'Comments' %> </h5>
+    	   </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% if @post_comments.any?%>
+	<div class="row mt-2">
+		<div class="col-md-12">
+			<% @post_comments.each do |comment|%>
+				<h3 class="text-dark"><%= comment.user.email%></h3>
+				<h4 class="text-danger"><%= comment.body %></h4>
+			<% end%>
+		</div>
+	</div>
+<% end %>
+
+<%= render :partial => 'comment_form'%>
